@@ -54,5 +54,23 @@ namespace RestauranteTuliette.Controllers
             }
             else { return NotFound(); }
         }
+        // DELETE api/<BebidumController>/5
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> Delete(int id/*,Bebidum Bebidum*/)
+        {
+            Plato Eliminar = await _context.Platos.FirstOrDefaultAsync(x => x.IdPlato == id);
+            if (Eliminar != null)
+            {
+                _context.Remove(Eliminar);
+
+                await _context.SaveChangesAsync();
+                return Ok();
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+        //PlatoController terminado
     }
 }
