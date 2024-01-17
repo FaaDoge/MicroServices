@@ -46,8 +46,24 @@ namespace RestauranteTuliette.Controllers
             Plato modificar = await _context.Platos.FirstOrDefaultAsync(x => x.IdPlato == id);
             if (modificar != null)
             {
-                modificar.Nombre = plato.Nombre;
-                modificar.Estado = plato.Estado;
+                modificar.TipoPlato = plato.TipoPlato;
+                modificar.Precio = plato.Precio;
+                modificar.Descripcion = plato.Descripcion;
+                modificar.IdIngrediente = plato.IdIngrediente;
+
+                await _context.SaveChangesAsync();
+                return Ok();
+            }
+            else { return NotFound(); }
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> Delete(int id)
+        {
+            Plato marcaEliminar = await _context.Platos.FirstOrDefaultAsync(x => x.IdPlato == id);
+            if (marcaEliminar != null)
+            {
+                _context.Remove(marcaEliminar);
 
                 await _context.SaveChangesAsync();
                 return Ok();
