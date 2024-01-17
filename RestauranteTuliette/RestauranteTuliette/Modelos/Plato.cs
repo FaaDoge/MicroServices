@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
+using RestauranteTuliette.Validaciones;
 
 namespace RestauranteTuliette.Modelos;
 
@@ -17,10 +18,12 @@ public partial class Plato
     public string? TipoPlato { get; set; }
 
     [Column(TypeName = "decimal(18, 0)")]
+    [SoloNumber]
     public decimal? Precio { get; set; }
 
     [StringLength(200)]
     [Unicode(false)]
+    [SoloLetras]
     public string? Descripcion { get; set; }
 
     [Column("idIngrediente")]
