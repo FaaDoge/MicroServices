@@ -87,5 +87,34 @@ namespace RestauranteTuliette.Controllers
             }
         }
         //Usuario controller terminado
+
+
+        [HttpGet("ListarUsuariosAM")]
+public async Task<ActionResult<List<DTOUsuariosReporte>>> ListarUsuariosAM()
+{
+    var resultado = await _context.Usuarios
+        .Where(u => u.Nombre != null && u.Nombre.ToUpper()[0] >= 'A' && u.Nombre.ToUpper()[0] <= 'M')
+        .Select(u => new DTOUsuariosReporte
+        {
+            IdUsuario = u.IdUsuario,
+            NombreUsuario = u.Nombre,
+        })
+        .ToListAsync();
+
+    return resultado;
+}
+
+
     }
+
+
+
+
+}
+public class DTOUsuariosReporte
+{
+    public int IdUsuario { get; set; }
+    public string NombreUsuario { get; set; }
+    public string NombreRol { get; set; }
+    public DateTime FechaRegistro { get; set; }
 }
