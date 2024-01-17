@@ -48,27 +48,29 @@ namespace RestauranteTuliette.Controllers
             {
                 modificar.TipoPlato = plato.TipoPlato;
                 modificar.Precio = plato.Precio;
-                modificar.Descripcion = plato.Descripcion;
-                modificar.IdIngrediente = plato.IdIngrediente;
 
                 await _context.SaveChangesAsync();
                 return Ok();
             }
             else { return NotFound(); }
         }
-
+        // DELETE api/<BebidumController>/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult> Delete(int id)
+        public async Task<ActionResult> Delete(int id/*,Bebidum Bebidum*/)
         {
-            Plato marcaEliminar = await _context.Platos.FirstOrDefaultAsync(x => x.IdPlato == id);
-            if (marcaEliminar != null)
+            Plato Eliminar = await _context.Platos.FirstOrDefaultAsync(x => x.IdPlato == id);
+            if (Eliminar != null)
             {
-                _context.Remove(marcaEliminar);
+                _context.Remove(Eliminar);
 
                 await _context.SaveChangesAsync();
                 return Ok();
             }
-            else { return NotFound(); }
+            else
+            {
+                return NotFound();
+            }
         }
+        //PlatoController terminado
     }
 }
