@@ -99,5 +99,21 @@ namespace RestauranteTuliette.Controllers
                 return NotFound();
             }
         }
+        [HttpGet("R2")]
+        public async Task<ActionResult<List<R2>>> ReportePedidosEnMesa(RestauranteTulietteContext _context)
+        {
+
+            var result = await _context.Pedidos
+                .Where(x => x.IdUbicacionNavigation.NroMesa == "10" && x.IdUbicacionNavigation.Tipo == "Bar")
+                .Select(x => new R2
+                {
+                    IdUbicacion = x.IdUbicacionNavigation.IdUbicacion,
+                    IdPedido = x.IdPedido,
+                    TipoUbicacion = x.IdUbicacionNavigation.Tipo,
+                    NroMesa = x.IdUbicacionNavigation.NroMesa,
+                    Bebida = x.IdBebidaNavigation.TipoBebida
+                }).ToListAsync();
+            return result;
+        }
     }
 }
