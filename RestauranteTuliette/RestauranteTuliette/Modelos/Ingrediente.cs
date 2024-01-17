@@ -4,35 +4,38 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace RestauranteTuliette.Modelos;
-
-[Table("Ingrediente")]
-public partial class Ingrediente
+namespace RestauranteTuliette.Modelos
 {
-    [Key]
-    public int IdIngrediente { get; set; }
+    [Table("Ingrediente")]
+    public partial class Ingrediente
+    {
+        [Key]
+        public int IdIngrediente { get; set; }
 
-    [StringLength(20)]
-    [Unicode(false)]
-    public string? TipoIngrediente { get; set; }
+        [StringLength(20, ErrorMessage = "El campo {0} no puede exceder los 20 caracteres.")]
+        [Unicode(false)]
+        public string? TipoIngrediente { get; set; }
 
-    [StringLength(50)]
-    [Unicode(false)]
-    public string? NombreIngrediente { get; set; }
+        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
+        [StringLength(50, ErrorMessage = "El campo {0} no puede exceder los 50 caracteres.")]
+        [Unicode(false)]
+        public string? NombreIngrediente { get; set; }
 
-    [StringLength(20)]
-    [Unicode(false)]
-    public string? Unidad { get; set; }
+        [StringLength(20, ErrorMessage = "El campo {0} no puede exceder los 20 caracteres.")]
+        [Unicode(false)]
+        public string? Unidad { get; set; }
 
-    public int? Cantidad { get; set; }
+        [Range(0, int.MaxValue, ErrorMessage = "La cantidad debe ser un valor no negativo.")]
+        public int? Cantidad { get; set; }
 
-    [StringLength(200)]
-    [Unicode(false)]
-    public string? Descripcion { get; set; }
+        [StringLength(200, ErrorMessage = "El campo {0} no puede exceder los 200 caracteres.")]
+        [Unicode(false)]
+        public string? Descripcion { get; set; }
 
-    [InverseProperty("IdIngredienteNavigation")]
-    public virtual ICollection<Bebidum> Bebida { get; set; } = new List<Bebidum>();
+        [InverseProperty("IdIngredienteNavigation")]
+        public virtual ICollection<Bebidum> Bebidas { get; set; } = new();
 
-    [InverseProperty("IdIngredienteNavigation")]
-    public virtual ICollection<Plato> Platos { get; set; } = new List<Plato>();
+        [InverseProperty("IdIngredienteNavigation")]
+        public virtual ICollection<Plato> Platos { get; set; } = new();
+    }
 }
