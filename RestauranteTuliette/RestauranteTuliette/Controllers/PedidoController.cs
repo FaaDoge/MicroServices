@@ -1,45 +1,43 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using RestauranteTuliette.Contexto;
 using RestauranteTuliette.Modelos;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace RestauranteTuliette.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class RolController : ControllerBase
+    public class PedidoController : ControllerBase
     {
         private readonly RestauranteTulietteContext _context;
 
-        public RolController(RestauranteTulietteContext context)
+        public PedidoController(RestauranteTulietteContext context)
         {
             _context = context;
         }
 
         // GET: api/Rol
         [HttpGet]
-        public async Task<ActionResult<List<Rol>>> Get()
+        public async Task<ActionResult<List<Pedido>>> Get()
         {
-            return await _context.Rols.ToListAsync();
+            return await _context.Pedidos.ToListAsync();
         }
 
         // GET: api/Rol/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Rol>> Get(int id)
+        public async Task<ActionResult<Pedido>> Get(int id)
         {
-            return await _context.Rols.FirstOrDefaultAsync(x => x.IdRol == id);
+            return await _context.Pedidos.FirstOrDefaultAsync(x => x.IdPedido == id);
         }
 
         // POST: api/Rol
         [HttpPost]
-        public async Task<ActionResult> Post(Rol rol)
+        public async Task<ActionResult> Post(Pedido pedidos)
         {
-            if (rol != null)
+            if (pedidos != null)
             {
-                _context.Rols.Add(rol);
+                _context.Pedidos.Add(pedidos);
                 await _context.SaveChangesAsync();
                 return Ok();
             }
@@ -51,13 +49,15 @@ namespace RestauranteTuliette.Controllers
 
         // PUT: api/Rol/5
         [HttpPut("{id}")]
-        public async Task<ActionResult> Put(int id, Rol rol)
+        public async Task<ActionResult> Put(int id, Pedido pedido)
         {
-            Rol rolModificar = await _context.Rols.FirstOrDefaultAsync(x => x.IdRol == id);
-            if (rolModificar != null)
+            Pedido Modificar = await _context.Pedidos.FirstOrDefaultAsync(x => x.IdPedido == id);
+            if (Modificar != null)
             {
-                rolModificar.Nombre = rol.Nombre;
-                rolModificar.Estado = rol.Estado;
+                Modificar.NombreCliente = pedido.NombreCliente;
+                Modificar.TipodePago = pedido.TipodePago;
+                Modificar.PrecioTotal = pedido.PrecioTotal;
+                Modificar.IdUbicacion = pedido.IdUbicacion;
 
                 await _context.SaveChangesAsync();
                 return Ok();
@@ -72,10 +72,10 @@ namespace RestauranteTuliette.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id)
         {
-            Rol rolEliminar = await _context.Rols.FirstOrDefaultAsync(x => x.IdRol == id);
-            if (rolEliminar != null)
+            Pedido Eliminar = await _context.Pedidos.FirstOrDefaultAsync(x => x.IdPedido == id);
+            if (Eliminar != null)
             {
-                _context.Remove(rolEliminar);
+                _context.Remove(Eliminar);
                 await _context.SaveChangesAsync();
                 return Ok();
             }
@@ -84,6 +84,5 @@ namespace RestauranteTuliette.Controllers
                 return NotFound();
             }
         }
-        //Rolcontroller terminado
     }
 }
