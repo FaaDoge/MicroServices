@@ -1,6 +1,7 @@
 CREATE DATABASE RestauranteTuliette
 GO
 
+
 USE RestauranteTuliette
 GO
 
