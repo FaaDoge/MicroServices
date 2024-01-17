@@ -12,7 +12,7 @@ public partial class Usuario
     [Key]
     public int IdUsuario { get; set; }
 
-    public int? Nombre { get; set; }
+    public string? Nombre { get; set; }
 
     [StringLength(100)]
     [Unicode(false)]

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using RestauranteTuliette.Contexto;
 using RestauranteTuliette.Modelos;
 using Microsoft.EntityFrameworkCore;
+using RestauranteTuliette.DTO;
 
 namespace RestauranteTuliette.Controllers
 {
@@ -29,6 +30,20 @@ namespace RestauranteTuliette.Controllers
         public async Task<ActionResult<Pedido>> Get(int id)
         {
             return await _context.Pedidos.FirstOrDefaultAsync(x => x.IdPedido == id);
+        }
+
+        [HttpGet("PedidoPlato")]
+        public async Task<ActionResult<List<PedidoPlatoDTO>>> ListaPedidoPlato()
+        {
+            return await _context.Pedidos.Select(x => new PedidoPlatoDTO
+            {
+                IdPedido = x.IdPedido,
+                NombreCliente = x.NombreCliente,
+                TipodePago = x.TipodePago,
+                PrecioTotal = x.PrecioTotal,
+                nroMesa = x.IdUbicacionNavigation.NroMesa,
+                Descripcion = x.IdPlatoNavigation.Descripcion,
+            }).ToListAsync();
         }
 
         // POST: api/Rol
