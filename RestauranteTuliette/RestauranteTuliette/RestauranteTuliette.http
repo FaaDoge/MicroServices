@@ -1,6 +1,0 @@
-@RestauranteTuliette_HostAddress = http://localhost:5083
-
-GET {{RestauranteTuliette_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
