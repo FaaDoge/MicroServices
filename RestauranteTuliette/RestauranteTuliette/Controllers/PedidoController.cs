@@ -115,5 +115,18 @@ namespace RestauranteTuliette.Controllers
                 }).ToListAsync();
             return result;
         }
+        [HttpGet("R3")]
+        public async Task<ActionResult<List<R3>>> ReportedePedidoCaroconsuplato(RestauranteTulietteContext _context)
+        {
+            var result = await _context.Pedidos
+                .Where(x => x.PrecioTotal >= 1000 )
+                .Select(x => new R3
+                {
+                    IdPedido = x.IdPedido,
+                    TipoPlato= x.IdPlatoNavigation.TipoPlato,
+                    precio = x.PrecioTotal.Value
+                }).ToListAsync();
+            return result;
+        }
     }
 }
