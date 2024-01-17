@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
+using RestauranteTuliette.Validaciones;
 
 namespace RestauranteTuliette.Modelos;
 
@@ -14,6 +15,7 @@ public partial class Pedido
 
     [StringLength(50)]
     [Unicode(false)]
+    [SoloLetras]
     public string? NombreCliente { get; set; }
 
     [StringLength(20)]
@@ -21,6 +23,7 @@ public partial class Pedido
     public string? TipodePago { get; set; }
 
     [Column(TypeName = "decimal(18, 0)")]
+    [SoloNumber]
     public decimal? PrecioTotal { get; set; }
 
     [Column("idUbicacion")]
