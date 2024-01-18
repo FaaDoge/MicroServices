@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using RestauranteTuliette.Modelos;
 using RestauranteTuliette.Modelos.Entity;
 
 namespace RestauranteTuliette.Contexto;
@@ -52,7 +53,7 @@ public partial class RestauranteTulietteContext : DbContext
         {
             entity.HasKey(e => e.IdPedido).HasName("PK__Pedido__9D335DC38AB35B7E");
 
-            entity.HasOne(d => d.IdBebidaNavigation).WithMany(p => p.PedidosNavigation).HasConstraintName("FK__Pedido__IdBebida__4316F928");
+            entity.HasOne(d => d.IdBebidaNavigation).WithMany(p => p.Pedidos).HasConstraintName("FK__Pedido__IdBebida__4316F928");
 
             entity.HasOne(d => d.IdPlatoNavigation).WithMany(p => p.Pedidos).HasConstraintName("FK__Pedido__IdPlato__4222D4EF");
 
