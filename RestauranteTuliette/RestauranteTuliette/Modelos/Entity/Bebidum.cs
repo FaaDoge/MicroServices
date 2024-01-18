@@ -27,6 +27,6 @@ namespace RestauranteTuliette.Modelos
         public virtual Ingrediente? IdIngredienteNavigation { get; set; }
 
         [InverseProperty("IdBebidaNavigation")]
-        public virtual ICollection<Pedido> Pedidos { get; set; } = new List<Pedido>();
+        public virtual ICollection<Pedido>? Pedidos { get; set; } = new List<Pedido>();
     }
 }

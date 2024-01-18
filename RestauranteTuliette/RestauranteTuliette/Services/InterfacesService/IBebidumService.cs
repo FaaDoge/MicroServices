@@ -3,7 +3,6 @@ using RestauranteTuliette.Modelos;
 using RestauranteTuliette.Modelos.Entity;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using APITiendaBDDic.Modelos.DTO;
 
 namespace RestauranteTuliette.Services.InterfacesService
 {

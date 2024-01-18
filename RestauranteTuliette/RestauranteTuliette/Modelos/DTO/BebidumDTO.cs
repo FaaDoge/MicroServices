@@ -1,4 +1,4 @@
-﻿namespace APITiendaBDDic.Modelos.DTO
+﻿namespace RestauranteTuliette.Modelos.DTO
 {
     public class BebidumDTO
     {

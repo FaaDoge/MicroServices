@@ -32,6 +32,7 @@ namespace RestauranteTuliette
             services.AddTransient<IUbicacionService, UbicacionService>();
             services.AddTransient<IPedidoService, PedidoService>();
             services.AddTransient<IPlatoService, PlatoService>();
+            services.AddTransient<IUsuarioService, UsuarioService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

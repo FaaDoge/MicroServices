@@ -2,7 +2,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RestauranteTuliette.Contexto;
+using RestauranteTuliette.Modelos.DTO;
 using RestauranteTuliette.Modelos.Entity;
+using RestauranteTuliette.Services.InterfacesService;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -12,109 +14,73 @@ namespace RestauranteTuliette.Controllers
     [ApiController]
     public class UsuarioController : ControllerBase
     {
-        private readonly RestauranteTulietteContext _context;
-
-        public UsuarioController(RestauranteTulietteContext context)
+        IUsuarioService _Service;
+        public UsuarioController(IUsuarioService Service)
         {
-            _context = context;
+            _Service = Service;
         }
-
         // GET: api/Usuario
         [HttpGet]
         public async Task<ActionResult<List<Usuario>>> Get()
         {
-            return await _context.Usuarios.ToListAsync();
+            var result = await _Service.ListaUsuarios();
+            if (result == null)
+                return NotFound();
+
+            return Ok(result);
         }
 
         // GET: api/Usuario/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Usuario>> Get(int id)
         {
-            return await _context.Usuarios.FirstOrDefaultAsync(x => x.IdUsuario == id);
+            var result = await _Service.ListarUsuarioID(id);
+            if (result == null)
+                return NotFound();
+
+            return Ok(result);
         }
 
         // POST: api/Usuario
         [HttpPost]
         public async Task<ActionResult> Post(Usuario usuario)
         {
-            if (usuario != null)
-            {
-                _context.Usuarios.Add(usuario);
-                await _context.SaveChangesAsync();
+            var result = await _Service.CrearUsuario(usuario);
+            if (result)
                 return Ok();
-            }
             else
-            {
                 return BadRequest("Debe ingresar datos válidos");
-            }
         }
 
         // PUT: api/Usuario/5
         [HttpPut("{id}")]
         public async Task<ActionResult> Put(int id, Usuario usuario)
         {
-            Usuario usuarioModificar = await _context.Usuarios.FirstOrDefaultAsync(x => x.IdUsuario == id);
-            if (usuarioModificar != null)
-            {
-                usuarioModificar.Nombre = usuario.Nombre;
-                usuarioModificar.Contrasena = usuario.Contrasena;
-                usuarioModificar.Estado = usuario.Estado;
-                usuarioModificar.IdRol = usuario.IdRol;
-
-                await _context.SaveChangesAsync();
+            var result = await _Service.EditarUsuario(id,usuario);
+            if (result)
                 return Ok();
-            }
             else
-            {
                 return NotFound();
-            }
         }
 
         // DELETE: api/Usuario/5
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id)
         {
-            Usuario usuarioEliminar = await _context.Usuarios.FirstOrDefaultAsync(x => x.IdUsuario == id);
-            if (usuarioEliminar != null)
-            {
-                _context.Remove(usuarioEliminar);
-                await _context.SaveChangesAsync();
+            var result = await _Service.BorrarUsuario(id);
+            if (result)
                 return Ok();
-            }
             else
-            {
                 return NotFound();
-            }
         }
         //Usuario controller terminado
 
 
         [HttpGet("ListarUsuariosAM")]
-public async Task<ActionResult<List<DTOUsuariosReporte>>> ListarUsuariosAM()
-{
-    var resultado = await _context.Usuarios
-        .Where(u => u.Nombre != null && u.Nombre.ToUpper()[0] >= 'A' && u.Nombre.ToUpper()[0] <= 'M')
-        .Select(u => new DTOUsuariosReporte
+        public async Task<ActionResult<List<DTOUsuariosReporte>>> ListarUsuariosAM()
         {
-            IdUsuario = u.IdUsuario,
-            NombreUsuario = u.Nombre,
-        })
-        .ToListAsync();
-
-    return resultado;
-}
-
-
+            var resultado = await _Service.ListarUsuariosAM();
+            return resultado;
+        }
     }
-
-
-
-
-}
-public class DTOUsuariosReporte
-{
-    public int IdUsuario { get; set; }
-    public string NombreUsuario { get; set; }
-    public string NombreRol { get; set; }
-    public DateTime FechaRegistro { get; set; }
 }

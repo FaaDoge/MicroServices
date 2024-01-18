@@ -58,7 +58,7 @@ CREATE TABLE Rol(
 
 CREATE TABLE Usuario(
 	IdUsuario INT IDENTITY(1,1) PRIMARY KEY,
-	Nombre INT,
+	Nombre VARCHAR(100),
 	Contrasena VARCHAR(100),
 	Estado int,
 	IdRol int,
