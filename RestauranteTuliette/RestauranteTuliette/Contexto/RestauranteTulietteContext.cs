@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using RestauranteTuliette.Modelos;
 using RestauranteTuliette.Modelos.Entity;
 
 namespace RestauranteTuliette.Contexto;
