@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RestauranteTuliette.Contexto;
-using RestauranteTuliette.Modelos;
+using RestauranteTuliette.Modelos.Entity;
 using System.Text.RegularExpressions;
 
 namespace RestauranteTuliette.Controllers

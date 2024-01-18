@@ -2,9 +2,9 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Text.RegularExpressions;
 using RestauranteTuliette.Contexto;
-using RestauranteTuliette.Modelos;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Immutable;
+using RestauranteTuliette.Modelos.Entity;
 
 namespace RestauranteTuliette.Controllers
 {
