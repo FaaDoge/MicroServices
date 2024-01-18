@@ -1,10 +1,9 @@
-﻿using System;
+﻿using RestauranteTuliette.Modelos.Entity;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore;
 
-namespace RestauranteTuliette.Modelos.Entity
+namespace RestauranteTuliette.Modelos
 {
     public partial class Bebidum
     {
@@ -27,8 +26,6 @@ namespace RestauranteTuliette.Modelos.Entity
         [InverseProperty("Bebidas")]
         public virtual Ingrediente? IdIngredienteNavigation { get; set; }
 
-        /*[InverseProperty("IdBebidaNavigation")]
-        public virtual ICollection<Pedido> PedidosNavigation { get; set; } = new List<Pedido>();*/
         [InverseProperty("IdBebidaNavigation")]
         public virtual ICollection<Pedido> Pedidos { get; set; } = new List<Pedido>();
     }
