@@ -28,7 +28,10 @@ namespace RestauranteTuliette
                      Configuration.GetConnectionString("cadenaConexion")));
             services.AddTransient<IBebidumService, BebidumService>();
             services.AddTransient<IIngredienteService, IngredienteService>();
-            services.AddTransient<IUsuarioService, UsuarioService>();
+            services.AddTransient<IRolService, RolService>();
+            services.AddTransient<IUbicacionService, UbicacionService>();
+            services.AddTransient<IPedidoService, PedidoService>();
+            services.AddTransient<IPlatoService, PlatoService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
