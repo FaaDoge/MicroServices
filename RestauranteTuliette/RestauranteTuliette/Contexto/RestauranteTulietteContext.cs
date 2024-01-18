@@ -40,7 +40,7 @@ public partial class RestauranteTulietteContext : DbContext
         {
             entity.HasKey(e => e.IdBebida).HasName("PK__Bebida__A111F0E3B5D7E393");
 
-            entity.HasOne(d => d.IdIngredienteNavigation).WithMany(p => p.Bebida).HasConstraintName("FK__Bebida__idIngred__3C69FB99");
+            entity.HasOne(d => d.IdIngredienteNavigation).WithMany(p => p.Bebidas).HasConstraintName("FK__Bebida__idIngred__3C69FB99");
         });
 
         modelBuilder.Entity<Ingrediente>(entity =>
