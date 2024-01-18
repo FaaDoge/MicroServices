@@ -23,18 +23,22 @@ namespace RestauranteTuliette.Controllers
         [HttpGet]
         public async Task<ActionResult<List<Usuario>>> Get()
         {
-            return await _Service.ListaUsuario();
+            var result = await _Service.ListaUsuarios();
+            if (result == null)
+                return NotFound();
+
+            return Ok(result);
         }
 
         // GET: api/Usuario/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Usuario>> Get(int id)
         {
-            var bebida = await _Service.ListaUsuarioId(id);
-            if (bebida == null)
+            var result = await _Service.ListarUsuarioID(id);
+            if (result == null)
                 return NotFound();
 
-            return Ok(bebida);
+            return Ok(result);
         }
 
         // POST: api/Usuario

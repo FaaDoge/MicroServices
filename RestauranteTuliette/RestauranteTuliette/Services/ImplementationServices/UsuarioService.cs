@@ -27,9 +27,32 @@ namespace RestauranteTuliette.Services.ImplementationServices
         }
         public async Task<Usuario> ListarUsuarioID(int id)
         {
-            var resultado = await context.Usuarios.FirstOrDefaultAsync(x => x.IdUsuario == id);
+            var resultado = await context.Usuarios.FirstOrDefaultAsync(x => x.IdUsuario==id);
             return resultado;
         }
+        /*public async Task<List<UsuarioDTO>> ListaUsuarios()
+        {
+            var resultado = await context.Usuarios.Select(x => new UsuarioDTO
+            {
+                Nombre = x.Nombre,
+                Contrasena = x.Contrasena,
+                Estado = x.Estado
+            }).ToListAsync();
+            return resultado;
+        }
+        public async Task<UsuarioDTO> ListarUsuarioID(int id)
+        {
+            var resultado = await context.Usuarios
+                .Where(x => x.IdUsuario == id)
+                .Select(x => new UsuarioDTO
+                {
+                    Nombre = x.Nombre,
+                    Contrasena = x.Contrasena,
+                    Estado = x.Estado
+                })
+                .FirstOrDefaultAsync();
+            return resultado;
+        }*/
         public async Task<bool> CrearUsuario(Usuario usuario)
         {
             if (usuario != null)
