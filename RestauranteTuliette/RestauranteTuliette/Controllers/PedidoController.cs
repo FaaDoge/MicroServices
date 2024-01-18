@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RestauranteTuliette.Contexto;
-using RestauranteTuliette.Modelos;
 using Microsoft.EntityFrameworkCore;
-using RestauranteTuliette.DTO;
+using RestauranteTuliette.Modelos.DTO;
+using RestauranteTuliette.Modelos.Entity;
 
 namespace RestauranteTuliette.Controllers
 {
