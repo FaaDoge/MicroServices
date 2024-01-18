@@ -3,6 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 using RestauranteTuliette.Contexto;
 using Microsoft.EntityFrameworkCore;
 using RestauranteTuliette.Modelos.Entity;
+using RestauranteTuliette.Services.InterfacesService;
+using RestauranteTuliette.Modelos.DTO;
+using RestauranteTuliette.Services.ImplementationServices;
 
 namespace RestauranteTuliette.Controllers
 {
@@ -10,77 +13,59 @@ namespace RestauranteTuliette.Controllers
     [ApiController]
     public class UbicacionController : ControllerBase
     {
-        private readonly RestauranteTulietteContext _context;
+        IUbicacionService _ubicacionService;
 
-        public UbicacionController(RestauranteTulietteContext context)
+        public UbicacionController(IUbicacionService ubicacionService)
         {
-            _context = context;
+            _ubicacionService = ubicacionService;
         }
 
-        // GET: api/Rol
         [HttpGet]
-        public async Task<ActionResult<List<Ubicacion>>> Get()
+        public async Task<ActionResult<List<UbicacionDTO>>> Get()
         {
-            return await _context.Ubicacions.ToListAsync();
+            var ubicacions = await _ubicacionService.ListaUbicacion();
+            return Ok(ubicacions);
         }
 
-        // GET: api/Rol/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Ubicacion>> Get(int id)
+        public async Task<ActionResult<UbicacionDTO>> Get(int id)
         {
-            return await _context.Ubicacions.FirstOrDefaultAsync(x => x.IdUbicacion == id);
-        }
-
-        // POST: api/Rol
-        [HttpPost]
-        public async Task<ActionResult> Post(Ubicacion Ubicacions)
-        {
-            if (Ubicacions != null)
-            {
-                _context.Ubicacions.Add(Ubicacions);
-                await _context.SaveChangesAsync();
-                return Ok();
-            }
-            else
-            {
-                return BadRequest("Debe ingresar datos válidos");
-            }
-        }
-
-        // PUT: api/Rol/5
-        [HttpPut("{id}")]
-        public async Task<ActionResult> Put(int id, Ubicacion ubicacion)
-        {
-            Ubicacion Modificar = await _context.Ubicacions.FirstOrDefaultAsync(x => x.IdUbicacion == id);
-            if (Modificar != null)
-            {
-                Modificar.Tipo = ubicacion.Tipo;
-                Modificar.NroMesa = ubicacion.NroMesa;
-
-                await _context.SaveChangesAsync();
-                return Ok();
-            }
-            else
-            {
+            var ubicacions = await _ubicacionService.ObtenerUbicacionPorId(id);
+            if (ubicacions == null)
                 return NotFound();
-            }
+
+            return Ok(ubicacions);
         }
 
-        // DELETE: api/Rol/5
+        [HttpPost]
+        public async Task<ActionResult> Post(Ubicacion ubicacion)
+        {
+            var result = await _ubicacionService.InsertUbicacion(ubicacion);
+            if (result)
+                return Ok();
+            else
+                return BadRequest("Debe ingresar datos válidos");
+        }
+
+        [HttpPut("{id}")]
+        public async Task<ActionResult> Put(int id, UbicacionDTO ubicacion)
+        {
+            var result = await _ubicacionService.UpdateUbicacion(ubicacion, id);
+            if (result)
+                return Ok();
+            else
+                return NotFound();
+        }
+
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id)
         {
-            Ubicacion Eliminar = await _context.Ubicacions.FirstOrDefaultAsync(x => x.IdUbicacion == id);
-            if (Eliminar != null)
-            {
-                _context.Remove(Eliminar);
-                await _context.SaveChangesAsync();
+            var result = await _ubicacionService.DeleteUbicacion(id);
+            if (result)
                 return Ok();
-            }
             else
-            {
                 return NotFound();
-            }
         }
+
     }
 }
