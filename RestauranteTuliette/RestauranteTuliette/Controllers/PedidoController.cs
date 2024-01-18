@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using RestauranteTuliette.Contexto;
 using RestauranteTuliette.Modelos;
 using Microsoft.EntityFrameworkCore;
+using RestauranteTuliette.DTO;
 
 namespace RestauranteTuliette.Controllers
 {
@@ -29,6 +30,20 @@ namespace RestauranteTuliette.Controllers
         public async Task<ActionResult<Pedido>> Get(int id)
         {
             return await _context.Pedidos.FirstOrDefaultAsync(x => x.IdPedido == id);
+        }
+
+        [HttpGet("PedidoPlato")]
+        public async Task<ActionResult<List<PedidoPlatoDTO>>> ListaPedidoPlato()
+        {
+            return await _context.Pedidos.Select(x => new PedidoPlatoDTO
+            {
+                IdPedido = x.IdPedido,
+                NombreCliente = x.NombreCliente,
+                TipodePago = x.TipodePago,
+                PrecioTotal = x.PrecioTotal,
+                nroMesa = x.IdUbicacionNavigation.NroMesa,
+                Descripcion = x.IdPlatoNavigation.Descripcion,
+            }).ToListAsync();
         }
 
         // POST: api/Rol
@@ -83,6 +98,35 @@ namespace RestauranteTuliette.Controllers
             {
                 return NotFound();
             }
+        }
+        [HttpGet("R2")]
+        public async Task<ActionResult<List<R2>>> ReportePedidosEnMesa(RestauranteTulietteContext _context)
+        {
+
+            var result = await _context.Pedidos
+                .Where(x => x.IdUbicacionNavigation.NroMesa == "10" && x.IdUbicacionNavigation.Tipo == "Bar")
+                .Select(x => new R2
+                {
+                    IdUbicacion = x.IdUbicacionNavigation.IdUbicacion,
+                    IdPedido = x.IdPedido,
+                    TipoUbicacion = x.IdUbicacionNavigation.Tipo,
+                    NroMesa = x.IdUbicacionNavigation.NroMesa,
+                    Bebida = x.IdBebidaNavigation.TipoBebida
+                }).ToListAsync();
+            return result;
+        }
+        [HttpGet("R3")]
+        public async Task<ActionResult<List<R3>>> ReportedePedidoCaroconsuplato(RestauranteTulietteContext _context)
+        {
+            var result = await _context.Pedidos
+                .Where(x => x.PrecioTotal >= 1000 )
+                .Select(x => new R3
+                {
+                    IdPedido = x.IdPedido,
+                    TipoPlato= x.IdPlatoNavigation.TipoPlato,
+                    precio = x.PrecioTotal.Value
+                }).ToListAsync();
+            return result;
         }
     }
 }
