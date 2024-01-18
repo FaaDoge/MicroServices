@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using RestauranteTuliette.Modelos.Entity;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -26,6 +27,6 @@ namespace RestauranteTuliette.Modelos
         public virtual Ingrediente? IdIngredienteNavigation { get; set; }
 
         [InverseProperty("IdBebidaNavigation")]
-        public virtual ICollection<Pedido> PedidosNavigation { get; set; } = new List<Pedido>();
+        public virtual ICollection<Pedido> Pedidos { get; set; } = new List<Pedido>();
     }
 }
