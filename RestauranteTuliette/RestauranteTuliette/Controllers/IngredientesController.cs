@@ -1,108 +1,68 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using RestauranteTuliette.Contexto;
+﻿using Microsoft.AspNetCore.Mvc;
 using RestauranteTuliette.Modelos.Entity;
+using RestauranteTuliette.Services.InterfacesService;
+using RestauranteTuliette.Modelos.DTO;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace RestauranteTuliette.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class IngredientesController : ControllerBase
+    public class IngredienteController : ControllerBase
     {
-        private readonly RestauranteTulietteContext _context;
+        private readonly IIngredienteService _ingredienteService;
 
-        public IngredientesController(RestauranteTulietteContext context)
+        public IngredienteController(IIngredienteService ingredienteService)
         {
-            _context = context;
+            _ingredienteService = ingredienteService;
         }
 
-        // GET: api/Ingredientes
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Ingrediente>>> GetIngredientes()
+        public async Task<ActionResult<List<IngredienteDTO>>> Get()
         {
-            return await _context.Ingredientes.ToListAsync();
+            var ingredientes = await _ingredienteService.ListaIngredientes();
+            return Ok(ingredientes);
         }
 
-        // GET: api/Ingredientes/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Ingrediente>> GetIngrediente(int id)
+        public async Task<ActionResult<IngredienteDTO>> Get(int id)
         {
-            var ingrediente = await _context.Ingredientes.FindAsync(id);
-
+            var ingrediente = await _ingredienteService.ObtenerIngredientePorId(id);
             if (ingrediente == null)
-            {
                 return NotFound();
-            }
 
-            return ingrediente;
+            return Ok(ingrediente);
         }
 
-        // PUT: api/Ingredientes/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutIngrediente(int id, Ingrediente ingrediente)
-        {
-            if (id != ingrediente.IdIngrediente)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(ingrediente).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!IngredienteExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
-
-        // POST: api/Ingredientes
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Ingrediente>> PostIngrediente(Ingrediente ingrediente)
+        public async Task<ActionResult> Post(Ingrediente ingrediente)
         {
-            _context.Ingredientes.Add(ingrediente);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetIngrediente", new { id = ingrediente.IdIngrediente }, ingrediente);
+            var result = await _ingredienteService.InsertIngrediente(ingrediente);
+            if (result)
+                return Ok();
+            else
+                return BadRequest("Debe ingresar datos válidos");
         }
 
-        // DELETE: api/Ingredientes/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteIngrediente(int id)
+        [HttpPut("{id}")]
+        public async Task<ActionResult> Put(int id, IngredienteDTO ingrediente)
         {
-            var ingrediente = await _context.Ingredientes.FindAsync(id);
-            if (ingrediente == null)
-            {
+            var result = await _ingredienteService.UpdateIngrediente(ingrediente, id);
+            if (result)
+                return Ok();
+            else
                 return NotFound();
-            }
-
-            _context.Ingredientes.Remove(ingrediente);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
         }
 
-        private bool IngredienteExists(int id)
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> Delete(int id)
         {
-            return _context.Ingredientes.Any(e => e.IdIngrediente == id);
+            var result = await _ingredienteService.DeleteIngrediente(id);
+            if (result)
+                return Ok();
+            else
+                return NotFound();
         }
     }
 }
