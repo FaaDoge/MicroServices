@@ -19,5 +19,5 @@ public partial class Rol
     public int? Estado { get; set; }
 
     [InverseProperty("IdRolNavigation")]
-    public virtual ICollection<Usuario> Usuarios { get; set; } = new List<Usuario>();
+    public virtual ICollection<Usuario>? Usuarios { get; set; } = new List<Usuario>();
 }

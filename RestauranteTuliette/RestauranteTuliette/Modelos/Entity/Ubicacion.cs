@@ -22,5 +22,5 @@ public partial class Ubicacion
     public string? NroMesa { get; set; }
 
     [InverseProperty("IdUbicacionNavigation")]
-    public virtual ICollection<Pedido> Pedidos { get; set; } = new List<Pedido>();
+    public virtual ICollection<Pedido>? Pedidos { get; set; } = new List<Pedido>();
 }

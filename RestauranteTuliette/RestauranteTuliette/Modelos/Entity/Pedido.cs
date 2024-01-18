@@ -35,7 +35,7 @@ public partial class Pedido
 
     [ForeignKey("IdBebida")]
     [InverseProperty("Pedidos")]
-    public virtual Bebidum IdBebidaNavigation { get; set; }
+    public virtual Bebidum? IdBebidaNavigation { get; set; }
 
     [ForeignKey("IdPlato")]
     [InverseProperty("Pedidos")]
