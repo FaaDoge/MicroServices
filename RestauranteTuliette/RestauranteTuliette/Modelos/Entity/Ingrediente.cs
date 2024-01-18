@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace RestauranteTuliette.Modelos
+namespace RestauranteTuliette.Modelos.Entity
 {
     [Table("Ingrediente")]
     public partial class Ingrediente
