@@ -40,7 +40,7 @@ public partial class RestauranteTulietteContext : DbContext
         {
             entity.HasKey(e => e.IdBebida).HasName("PK__Bebida__A111F0E3B5D7E393");
 
-            entity.HasOne(d => d.IdIngredienteNavigation).WithMany(p => p.Bebida).HasConstraintName("FK__Bebida__idIngred__3C69FB99");
+            entity.HasOne(d => d.IdIngredienteNavigation).WithMany(p => p.Bebidas).HasConstraintName("FK__Bebida__idIngred__3C69FB99");
         });
 
         modelBuilder.Entity<Ingrediente>(entity =>
@@ -52,7 +52,7 @@ public partial class RestauranteTulietteContext : DbContext
         {
             entity.HasKey(e => e.IdPedido).HasName("PK__Pedido__9D335DC38AB35B7E");
 
-            entity.HasOne(d => d.IdBebidaNavigation).WithMany(p => p.Pedidos).HasConstraintName("FK__Pedido__IdBebida__4316F928");
+            entity.HasOne(d => d.IdBebidaNavigation).WithMany(p => p.PedidosNavigation).HasConstraintName("FK__Pedido__IdBebida__4316F928");
 
             entity.HasOne(d => d.IdPlatoNavigation).WithMany(p => p.Pedidos).HasConstraintName("FK__Pedido__IdPlato__4222D4EF");
 
