@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RestauranteTuliette.Contexto;
-using RestauranteTuliette.Modelos;
+using RestauranteTuliette.Modelos.Entity;
 
 namespace RestauranteTuliette.Controllers
 {
