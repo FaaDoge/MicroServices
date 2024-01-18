@@ -1,5 +1,5 @@
 ﻿using RestauranteTuliette.Contexto;
-using APITiendaBDDic.Modelos.DTO;
+using RestauranteTuliette.Modelos.DTO;
 using RestauranteTuliette.Services.InterfacesService;
 using Microsoft.EntityFrameworkCore;
 using RestauranteTuliette.Contexto;
@@ -9,6 +9,7 @@ using RestauranteTuliette.Services.InterfacesService;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using APITiendaBDDic.Modelos.DTO;
 
 namespace RestauranteTuliette.Services.ImplementationServices
 {

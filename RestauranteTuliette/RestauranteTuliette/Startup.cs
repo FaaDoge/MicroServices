@@ -1,6 +1,8 @@
 ﻿using RestauranteTuliette.Contexto;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using RestauranteTuliette.Services.InterfacesService;
+using RestauranteTuliette.Services.ImplementationServices;
 
 namespace RestauranteTuliette
 {
@@ -24,6 +26,8 @@ namespace RestauranteTuliette
             });
             services.AddDbContext<RestauranteTulietteContext>(options => options.UseSqlServer(
                      Configuration.GetConnectionString("cadenaConexion")));
+            services.AddTransient<IBebidumService, BebidumService>();
+            services.AddTransient<IIngredienteService, IngredienteService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
