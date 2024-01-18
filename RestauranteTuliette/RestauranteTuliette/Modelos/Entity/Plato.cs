@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 using RestauranteTuliette.Validaciones;
 
-namespace RestauranteTuliette.Modelos;
+namespace RestauranteTuliette.Modelos.Entity;
 
 [Table("Plato")]
 public partial class Plato
