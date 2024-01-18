@@ -33,7 +33,7 @@ namespace RestauranteTuliette.Modelos.Entity
         public string? Descripcion { get; set; }
 
         [InverseProperty("IdIngredienteNavigation")]
-        public virtual ICollection<Bebidum> Bebida { get; set; } = new List<Bebidum>();
+        public virtual ICollection<Bebidum> Bebidas { get; set; } = new List<Bebidum>();
 
         [InverseProperty("IdIngredienteNavigation")]
         public virtual ICollection<Plato> Platos { get; set; } = new List<Plato>();
